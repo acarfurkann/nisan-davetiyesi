@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Ferhan & Furkan — Nişan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-l: #E8D59A;
+  --gold-p: #F5EDD8;
+  --cream: #FAF6F0;
+  --bg: #070605;
+  --bg2: #0D0C0A;
+  --txt: #EEE4D0;
+  --muted: #6E6454;
+  --border: rgba(201,168,76,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Montserrat',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+#canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(ellipse 60% 60% at 15% 50%,rgba(201,168,76,.04) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 50% at 85% 20%,rgba(201,168,76,.03) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 90%,rgba(201,168,76,.025) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+section,footer,header{position:relative;z-index:1;}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:3rem 2rem 6rem;
+}
+.hero-label{
+  font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 1.2s ease forwards .4s;
+}
+.hero-names{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;
+  font-size:clamp(4rem,16vw,9.5rem);
+  line-height:.92;letter-spacing:-.02em;
+  color:var(--cream);
+  opacity:0;animation:fadeUp 1.6s cubic-bezier(.22,1,.36,1) forwards .7s;
+}
+.hero-names .name-line{display:block;}
+.hero-names .name-it{font-style:italic;color:var(--gold-l);}
+.hero-amp{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:300;
+  font-size:clamp(2.5rem,8vw,5rem);
+  color:var(--gold);
+  line-height:1.1;margin:.2em 0;
+}
+.hero-vline{
+  width:1px;height:70px;
+  background:linear-gradient(to bottom,transparent,var(--gold) 40%,transparent);
+  margin:2.5rem auto;
+  opacity:0;animation:fadeIn 1.5s ease forwards 1.6s;
+}
+.hero-date{
+  font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--muted);
+  opacity:0;animation:fadeUp 1.2s ease forwards 1.9s;
+}
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  opacity:0;animation:fadeIn 2s ease forwards 3s;
+}
+.scroll-hint span{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);}
+.scroll-bar{width:1px;height:40px;background:var(--gold);animation:scrollAnim 2s ease-in-out infinite 3.5s;}
+
+/* ─── REVEAL ─── */
+.r{opacity:0;transform:translateY(36px);transition:opacity 1s ease,transform 1s ease;}
+.r.v{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:.1s;}.rd2{transition-delay:.25s;}
+.rd3{transition-delay:.4s;}.rd4{transition-delay:.55s;}
+.rd5{transition-delay:.7s;}
+
+/* ─── SECTIONS ─── */
+.sec{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:6rem 2rem;text-align:center;
+}
+.sec-label{font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;font-size:clamp(2.8rem,9vw,5.5rem);
+  line-height:1.05;color:var(--cream);margin-bottom:1rem;
+}
+.sec-title em{font-style:italic;color:var(--gold-l);}
+.gline{width:36px;height:1px;background:var(--gold);margin:1.8rem auto;}
+.sec-body{
+  font-size:.68rem;letter-spacing:.15em;line-height:2.2;
+  color:var(--muted);max-width:360px;
+}
+
+/* ─── DATE ─── */
+.big-day{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;
+  font-size:clamp(6rem,20vw,13rem);
+  color:var(--cream);line-height:.85;
+  letter-spacing:-.04em;
+}
+.big-day .gd{color:var(--gold);}
+.date-row{
+  display:flex;align-items:center;gap:1.8rem;
+  margin-top:1.8rem;justify-content:center;
+}
+.date-row span{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--gold);}
+
+/* ─── COUNTDOWN ─── */
+.cd{display:flex;gap:clamp(1.5rem,5vw,3.5rem);margin-top:4rem;}
+.cd-item{text-align:center;}
+.cd-num{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;
+  font-size:clamp(2.8rem,9vw,5rem);
+  color:var(--gold-l);line-height:1;
+}
+.cd-lbl{font-size:.52rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-top:.5rem;}
+
+/* ─── ORNAMENT ─── */
+.orn{
+  display:flex;align-items:center;gap:1.2rem;
+  width:260px;margin:3.5rem auto;
+}
+.orn-l{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.35));}
+.orn-lr{flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.35));}
+.orn-d{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);}
+.orn-ds{width:3px;height:3px;background:rgba(201,168,76,.5);transform:rotate(45deg);}
+
+/* ─── VENUE CARD ─── */
+.vcard{
+  background:rgba(201,168,76,.035);
+  border:1px solid var(--border);
+  padding:2.8rem 3.2rem;
+  max-width:400px;width:100%;
+  position:relative;
+}
+.vcard::before,
+.vcard::after{
+  content:'';position:absolute;
+  width:16px;height:16px;
+}
+.vcard::before{top:-1px;left:-1px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);}
+.vcard::after{bottom:-1px;right:-1px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);}
+.vcard-tag{font-size:.55rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.vcard-name{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:400;font-size:1.9rem;
+  color:var(--cream);margin-bottom:.5rem;
+}
+.vcard-addr{font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;line-height:1.8;}
+.vcard-sep{height:1px;background:var(--border);margin:1.8rem 0;}
+.vcard-time{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;font-size:3.2rem;
+  color:var(--gold-l);line-height:1;
+}
+.vcard-tsub{font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:.4rem;}
+
+/* ─── RSVP ─── */
+.rsvp-sec{
+  background:rgba(201,168,76,.02);
+  border-top:1px solid rgba(201,168,76,.06);
+}
+.rsvp-num{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;font-size:clamp(2rem,7vw,3.2rem);
+  color:var(--cream);letter-spacing:.04em;
+}
+.rsvp-sub{font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:.5rem;}
+.deadline{
+  display:inline-block;
+  border:1px solid var(--border);
+  padding:.6rem 1.8rem;
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-l);
+  margin-bottom:2.5rem;
+}
+
+/* ─── FOOTER ─── */
+.footer{
+  padding:4rem 2rem 5rem;
+  text-align:center;
+  border-top:1px solid rgba(201,168,76,.07);
+}
+.footer-q{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:300;
+  font-size:clamp(1.1rem,3.5vw,1.4rem);
+  color:var(--muted);line-height:1.7;
+}
+.footer-sig{
+  font-size:.55rem;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--gold);margin-top:2rem;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes scrollAnim{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:.3;transform:scaleY(.5);}}
+
+@media(max-width:480px){
+  .cd{gap:1.4rem;}
+  .vcard{padding:2rem 1.6rem;}
+  .orn{width:200px;}
+  .hero-names{font-size:clamp(3.5rem,18vw,8rem);}
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <p class="hero-label">✦ Nişan Davetiyesi ✦</p>
+  <h1 class="hero-names">
+    <span class="name-line">Ferhan</span>
+    <span class="hero-amp">&</span>
+    <span class="name-line name-it">Furkan</span>
+  </h1>
+  <div class="hero-vline"></div>
+  <p class="hero-date">14 Haziran 2026 &nbsp;·&nbsp; Pazar</p>
+  <div class="scroll-hint">
+    <div class="scroll-bar"></div>
+    <span>Kaydır</span>
+  </div>
+</section>
+
+<!-- ═══ DATE ═══ -->
+<section class="sec">
+  <p class="sec-label r">Tarih</p>
+  <div class="big-day r rd1"><span class="gd">14</span></div>
+  <div class="date-row r rd2">
+    <span>Haziran</span><div class="dot"></div>
+    <span>2026</span><div class="dot"></div>
+    <span>Pazar</span>
+  </div>
+  <div class="gline r rd3"></div>
+  <p class="sec-body r rd3">Mutlu haberimizi sizinle paylaşmaktan<br>büyük sevinç duyuyoruz.</p>
+  <div class="cd r rd4">
+    <div class="cd-item">
+      <div class="cd-num" id="cd-d">—</div>
+      <div class="cd-lbl">Gün</div>
+    </div>
+    <div class="cd-item">
+      <div class="cd-num" id="cd-h">—</div>
+      <div class="cd-lbl">Saat</div>
+    </div>
+    <div class="cd-item">
+      <div class="cd-num" id="cd-m">—</div>
+      <div class="cd-lbl">Dakika</div>
+    </div>
+    <div class="cd-item">
+      <div class="cd-num" id="cd-s">—</div>
+      <div class="cd-lbl">Saniye</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VENUE ═══ -->
+<section class="sec">
+  <p class="sec-label r">Mekan</p>
+  <h2 class="sec-title r rd1">
+    <em>My Dream</em><br>Event
+  </h2>
+  <div class="orn r rd2">
+    <div class="orn-l"></div>
+    <div class="orn-ds"></div><div class="orn-d"></div><div class="orn-ds"></div>
+    <div class="orn-lr"></div>
+  </div>
+  <div class="vcard r rd3">
+    <p class="vcard-tag">✦ Nişan Töreni ✦</p>
+    <div class="vcard-name">My Dream Event</div>
+    <div class="vcard-addr">Saray Cumhuriyet, Özal Bulvarı 157/F<br>06146 Pursaklar · Ankara</div>
+    <div class="vcard-sep"></div>
+    <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x408209000cc6eb57:0xae725300304c8418" target="_blank" style="display:inline-block;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:.2rem;">✦ Haritada Gör</a>
+    <div class="vcard-sep"></div>
+    <div class="vcard-time">14:00</div>
+    <div class="vcard-tsub">Misafirlerimizi 13:30'da bekliyoruz</div>
+  </div>
+</section>
+
+
+
+<!-- ═══ RSVP ═══ -->
+<section class="sec rsvp-sec">
+  <p class="sec-label r">Katılım</p>
+  <h2 class="sec-title r rd1">Bizi Haberdar<br><em>Edin</em></h2>
+  <div class="gline r rd2"></div>
+  <div class="r rd3">
+    <p class="sec-body">Katılım durumunuzu en geç 7 Haziran 2026<br>tarihine kadar bildirmenizi rica ederiz.</p>
+  </div>
+  <div class="orn r rd5" style="margin-top:3.5rem;">
+    <div class="orn-l"></div>
+    <div class="orn-ds"></div><div class="orn-d"></div><div class="orn-ds"></div>
+    <div class="orn-lr"></div>
+  </div>
+  <p class="sec-body r rd5" style="margin-top:0;">
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="footer-q r">
+    "İki kalbin bir araya geldiği bu anı,<br>sevincinizle paylaşmak isteriz."
+  </p>
+  <p class="footer-sig r rd1">Ferhan & Furkan &nbsp;·&nbsp; Haziran 2026</p>
+</footer>
+
+<script>
+// ── PARTICLES ──
+const cv = document.getElementById('canvas');
+const cx = cv.getContext('2d');
+let W = 0, H = 0, pts = [];
+
+function resize(){
+  W = cv.width = window.innerWidth;
+  H = cv.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Pt {
+  constructor(init){
+    this.x = Math.random() * (window.innerWidth || 400);
+    this.y = init ? Math.random() * (window.innerHeight || 800) : (window.innerHeight || 800) + 8;
+    this.r = Math.random() * 1.4 + .3;
+    this.vy = -(Math.random() * .28 + .08);
+    this.vx = (Math.random() - .5) * .12;
+    this.o = 0; this.mo = Math.random() * .45 + .08;
+    this.fi = true; this.life = 0; this.ml = Math.random() * 320 + 180;
+  }
+  tick(){
+    this.x += this.vx; this.y += this.vy; this.life++;
+    if(this.fi){ this.o += .004; if(this.o >= this.mo) this.fi = false; }
+    else if(this.life > this.ml){ this.o -= .003; }
+    if((this.o <= 0 && !this.fi) || this.y < -8){
+      this.x = Math.random() * W;
+      this.y = H + 8;
+      this.r = Math.random() * 1.4 + .3;
+      this.vy = -(Math.random() * .28 + .08);
+      this.vx = (Math.random() - .5) * .12;
+      this.o = 0; this.mo = Math.random() * .45 + .08;
+      this.fi = true; this.life = 0; this.ml = Math.random() * 320 + 180;
+    }
+  }
+  draw(){
+    cx.save();
+    cx.globalAlpha = Math.max(0, this.o);
+    cx.fillStyle = '#C9A84C';
+    cx.beginPath();
+    cx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    cx.fill();
+    cx.restore();
+  }
+}
+
+for(let i = 0; i < 90; i++) pts.push(new Pt(true));
+
+(function loop(){
+  cx.clearRect(0, 0, W, H);
+  pts.forEach(p => { p.tick(); p.draw(); });
+  requestAnimationFrame(loop);
+})();
+
+// ── SCROLL REVEAL ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('v'); obs.unobserve(e.target); }
+  });
+}, { threshold: .12 });
+document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+// ── COUNTDOWN ──
+const TARGET = new Date('2026-06-14T14:00:00');
+function pad(n){ return String(n).padStart(2,'0'); }
+function tick(){
+  const now = new Date(), diff = TARGET - now;
+  if(diff <= 0){
+    ['cd-d','cd-h','cd-m','cd-s'].forEach((id,i) =>
+      document.getElementById(id).textContent = i === 0 ? '0' : '00');
+    return;
+  }
+  document.getElementById('cd-d').textContent = Math.floor(diff/86400000);
+  document.getElementById('cd-h').textContent = pad(Math.floor(diff%86400000/3600000));
+  document.getElementById('cd-m').textContent = pad(Math.floor(diff%3600000/60000));
+  document.getElementById('cd-s').textContent = pad(Math.floor(diff%60000/1000));
+}
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
